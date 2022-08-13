@@ -3,6 +3,7 @@ package com.porfolio.backend.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,8 +30,8 @@ public class AcercadeController {
 
 	// Este metodo sirve para LISTAR todas las...
 	@GetMapping("/traer")
-	public List<Acercade> getAcercade() {
-		return Iservice.getAcercade();
+	public ResponseEntity<List<Acercade>> getAcercade() {
+		return new ResponseEntity<>( Iservice.getAcercade(), HttpStatus.OK);
 	}
 
 	// Este metodo sirve para CREAR una...
