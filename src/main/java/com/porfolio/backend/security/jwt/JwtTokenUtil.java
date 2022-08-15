@@ -14,7 +14,6 @@ import com.porfolio.backend.model.User;
 public class JwtTokenUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenUtil.class);
 
-	// TIEMPO DE EXPIRACION DEL TOKEN (el 24 es la cantidad de horas)
 	private static final long EXPIRE_DURATION = 24 * 60 * 60 * 1000;
 	@Value("${app.jwt.secret}")
 	private String secretKey;
