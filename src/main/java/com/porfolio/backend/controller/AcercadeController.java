@@ -21,7 +21,7 @@ import com.porfolio.backend.model.Acercade;
 
 @RestController
 @RequestMapping("/acercade")
-
+@CrossOrigin(origins = "http://localhost:4200")
 
 public class AcercadeController {
 
@@ -30,8 +30,8 @@ public class AcercadeController {
 
 	// Este metodo sirve para LISTAR todas las...
 	@GetMapping("/traer")
-	public ResponseEntity<List<Acercade>> getAcercade() {
-		return new ResponseEntity<>( Iservice.getAcercade(), HttpStatus.OK);
+	public List<Acercade> getAcercade() {
+		return Iservice.getAcercade();
 	}
 
 	// Este metodo sirve para CREAR una...
