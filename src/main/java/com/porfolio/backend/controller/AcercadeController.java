@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,12 +36,14 @@ public class AcercadeController {
 	}
 
 	// Este metodo sirve para CREAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
 	public void createAcercade(@RequestBody Acercade obj) {
 		Iservice.saveAcercade(obj);
 	}
 
 	// Este metodo sirve para BORRAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
 	public void deleteAcercade(@PathVariable Long id) {
 		Iservice.deleteAcercade(id);
@@ -55,6 +58,7 @@ public class AcercadeController {
 	}
 
 	//Este metodo sirve para EDITAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/actualizar/{id}")
 	public ResponseEntity<Acercade> actualizarAcercade(@PathVariable Long id,	@RequestBody Acercade detalles) {
 		Acercade obj = Iservice.findAcercade(id);

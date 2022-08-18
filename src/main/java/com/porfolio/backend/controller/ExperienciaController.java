@@ -3,6 +3,7 @@ package com.porfolio.backend.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,17 +36,20 @@ public class ExperienciaController {
 		return "Hola rodrigo";
 	}
 	
+	//
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
 	public void createExperiencia(@RequestBody Experiencia exp) {
 		IExperiencia.saveExperiencia(exp);
 	}
 	
+	//
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
 	public void deleteExperiencia(@PathVariable Long id) {
 		IExperiencia.deleteExperiencia(id);
 		
 	}
-	
 	
 	//Este metodo sirve  para buscar una experiencia
 	@GetMapping("/{id}")
@@ -53,9 +57,9 @@ public class ExperienciaController {
 		Experiencia exp=IExperiencia.findExperiencia(id);
 		return ResponseEntity.ok(exp);
 	}
-	
-	
+		
 	//
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/actualizar/{id}")
 	public ResponseEntity<Experiencia> actualizarExperiencia(@PathVariable Long id, @RequestBody Experiencia detallesExp){
 		Experiencia exp=IExperiencia.findExperiencia(id);
