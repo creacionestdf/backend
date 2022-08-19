@@ -22,7 +22,7 @@ import com.porfolio.backend.model.Acercade;
 
 @RestController
 @RequestMapping("/acercade")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://porfolioweb-14781.web.app")
 
 public class AcercadeController {
 
