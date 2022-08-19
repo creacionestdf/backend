@@ -24,6 +24,7 @@ import com.porfolio.backend.model.Acercade;
 @RequestMapping("/acercade")
 @CrossOrigin(origins = "https://porfolioweb-14781.web.app")
 
+
 public class AcercadeController {
 
 	@Autowired
