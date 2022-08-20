@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.porfolio.backend.service.IAcercadeService;
 import com.porfolio.backend.model.Acercade;
+import com.porfolio.backend.security.controller.Mensaje;
 
 
 @RestController
@@ -29,15 +30,17 @@ public class AcercadeController {
 
 	// Este metodo sirve para LISTAR todas las...
 	@GetMapping("/traer")
-	public List<Acercade> getAcercade() {
-		return Iservice.getAcercade();
+	public ResponseEntity<List<Acercade>> getAcercade() {
+		List<Acercade> list= Iservice.getAcercade();
+		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
 	// Este metodo sirve para CREAR una...
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
-	public void createAcercade(@RequestBody Acercade obj) {
+	public ResponseEntity<?> createAcercade(@RequestBody Acercade obj) {
 		Iservice.saveAcercade(obj);
+		return new ResponseEntity(new Mensaje("Acercade creado correctamente"), HttpStatus.OK);
 	}
 
 	// Este metodo sirve para BORRAR una...

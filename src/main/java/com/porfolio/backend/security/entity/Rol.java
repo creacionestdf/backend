@@ -20,12 +20,9 @@ public class Rol {
 	private RolNombre rolNombre;
 	
 	//Contructor
-	public Rol() {
-		super();
-	}
+	public Rol() {}
 
 	public Rol(@NotNull RolNombre rolNombre) {
-		super();
 		this.rolNombre = rolNombre;
 	}
 

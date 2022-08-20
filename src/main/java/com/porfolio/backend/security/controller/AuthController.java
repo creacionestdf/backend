@@ -36,14 +36,19 @@ import com.porfolio.backend.security.Dto.NuevoUsuario;
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
+	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
 	@Autowired
 	AuthenticationManager authenticationManager;
+	
 	@Autowired
 	UsuarioService usuarioService;
+	
 	@Autowired
 	RolService rolService;
+	
 	@Autowired
 	JwtProvider jwtProvider;
 	
@@ -57,7 +62,9 @@ public class AuthController {
 		if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
 			return new ResponseEntity(new Mensaje("Ese Email ya existe"),HttpStatus.BAD_REQUEST); 
 		
-		Usuario usuario = new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),passwordEncoder.encode(nuevoUsuario.getPassword()));
+		Usuario usuario = 
+				new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
+						passwordEncoder.encode(nuevoUsuario.getPassword()));
 		
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
@@ -75,12 +82,13 @@ public class AuthController {
 		if(bindingResult.hasErrors())
 			return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
 		
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
+		Authentication authentication = 
+				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		String jwt = jwtProvider.generateToken(authentication);
-		
+				
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		
 		JwtDto jwtDTO = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());

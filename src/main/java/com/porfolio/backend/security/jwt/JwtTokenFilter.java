@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.porfolio.backend.security.service.UserDetailsImpl;
 
 public class JwtTokenFilter extends OncePerRequestFilter{
-	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+	private final static Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
 	
 	@Autowired
 	JwtProvider jwtProvider;
@@ -33,8 +33,9 @@ public class JwtTokenFilter extends OncePerRequestFilter{
 			if(token != null && jwtProvider.validateToken(token)) {
 				String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
 				UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(nombreUsuario);
-				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, 
-				null, userDetails.getAuthorities());
+				UsernamePasswordAuthenticationToken auth = 
+						new UsernamePasswordAuthenticationToken(
+								userDetails,null, userDetails.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 		} catch (Exception e) {
