@@ -20,7 +20,7 @@ import com.porfolio.backend.model.Skill;
 
 @RestController
 @RequestMapping("/skills")
-@CrossOrigin(origins = "https://porfolioweb-14781.web.app")
+@CrossOrigin
 public class SkillController {
 
 	@Autowired

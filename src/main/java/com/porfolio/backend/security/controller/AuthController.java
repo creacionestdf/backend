@@ -34,7 +34,7 @@ import com.porfolio.backend.security.Dto.NuevoUsuario;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "https://porfolioweb-14781.web.app")
+@CrossOrigin
 public class AuthController {
 	
 	@Autowired

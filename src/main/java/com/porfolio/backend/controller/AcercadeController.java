@@ -23,7 +23,7 @@ import com.porfolio.backend.security.controller.Mensaje;
 
 @RestController
 @RequestMapping("/acercade")
-@CrossOrigin(origins = "https://porfolioweb-14781.web.app")
+@CrossOrigin
 public class AcercadeController {
 
 	@Autowired IAcercadeService Iservice;

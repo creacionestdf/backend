@@ -18,7 +18,7 @@ import com.porfolio.backend.model.Certificacion;
 
 @RestController
 @RequestMapping("/certificaciones")
-@CrossOrigin(origins = "https://porfolioweb-14781.web.app")
+@CrossOrigin
 
 public class CertificacionController {
 
