@@ -11,8 +11,7 @@ import com.porfolio.backend.repository.AcercadeRepository;
 @Service
 public class AcercadeService implements IAcercadeService {
 
-	@Autowired // anotation que genera una dependencia
-	public AcercadeRepository Repository;
+	@Autowired AcercadeRepository Repository;
 
 	@Override
 	public List<Acercade> getAcercade() {

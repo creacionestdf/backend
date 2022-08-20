@@ -22,11 +22,10 @@ import com.porfolio.backend.model.Acercade;
 
 @RestController
 @RequestMapping("/acercade")
-
+@CrossOrigin(origins = "https://porfolioweb-14781.web.app")
 public class AcercadeController {
 
-	@Autowired
-	private IAcercadeService Iservice;
+	@Autowired IAcercadeService Iservice;
 
 	// Este metodo sirve para LISTAR todas las...
 	@GetMapping("/traer")

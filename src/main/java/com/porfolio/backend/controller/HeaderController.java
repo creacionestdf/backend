@@ -20,8 +20,7 @@ import com.porfolio.backend.model.Header;
 
 @RestController
 @RequestMapping("/perfil")
-@CrossOrigin(origins = "http://localhost:4200")
-
+@CrossOrigin(origins = "https://porfolioweb-14781.web.app")
 public class HeaderController {
 
 	@Autowired
