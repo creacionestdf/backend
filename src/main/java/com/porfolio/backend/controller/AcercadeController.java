@@ -35,7 +35,7 @@ public class AcercadeController {
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
-	// Este metodo sirve para CREAR una...
+	//Para CREAR una...
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
 	public ResponseEntity<?> createAcercade(@RequestBody Acercade obj) {
