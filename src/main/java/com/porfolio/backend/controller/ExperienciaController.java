@@ -20,7 +20,7 @@ import com.porfolio.backend.model.Experiencia;
 
 @RestController
 @RequestMapping("/experiencias")
-@CrossOrigin
+
 public class ExperienciaController {
 	
 	@Autowired

@@ -20,7 +20,7 @@ import com.porfolio.backend.model.Header;
 
 @RestController
 @RequestMapping("/perfil")
-@CrossOrigin
+
 public class HeaderController {
 
 	@Autowired

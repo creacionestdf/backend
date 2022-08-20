@@ -20,7 +20,7 @@ import com.porfolio.backend.model.Skill;
 
 @RestController
 @RequestMapping("/skills")
-@CrossOrigin
+
 public class SkillController {
 
 	@Autowired

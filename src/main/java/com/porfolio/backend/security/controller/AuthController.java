@@ -34,7 +34,7 @@ import com.porfolio.backend.security.Dto.NuevoUsuario;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+
 public class AuthController {
 	
 	@Autowired

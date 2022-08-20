@@ -20,7 +20,7 @@ import com.porfolio.backend.model.Proyecto;
 
 @RestController
 @RequestMapping("/proyectos")
-@CrossOrigin
+
 public class ProyectoController {
 
 	@Autowired
