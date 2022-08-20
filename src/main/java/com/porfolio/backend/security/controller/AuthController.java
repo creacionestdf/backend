@@ -14,14 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.porfolio.backend.security.entity.Usuario;
 import com.porfolio.backend.security.entity.Rol;
 import com.porfolio.backend.security.enums.RolNombre;
@@ -77,11 +74,14 @@ public class AuthController {
 		return new ResponseEntity(new Mensaje("Usuario guardado"), HttpStatus.CREATED);
 	}
 	
+	
+	
+	
 	@PostMapping("/login")
-	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
+	public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
 		if(bindingResult.hasErrors())
-			return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
-		
+			return new ResponseEntity<>(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
+			
 		Authentication authentication = 
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
 		
@@ -93,6 +93,6 @@ public class AuthController {
 		
 		JwtDto jwtDTO = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
 		
-		return new ResponseEntity(jwtDTO, HttpStatus.OK);
+		return new ResponseEntity<>(jwtDTO, HttpStatus.OK);
 	}
 }

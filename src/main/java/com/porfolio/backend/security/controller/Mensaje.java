@@ -7,16 +7,16 @@ public class Mensaje {
 	//Contructor
 	public Mensaje() {	}
 
-	public Mensaje(String mensaje) {
-		this.mensaje = mensaje;
+	public Mensaje(String m) {
+		this.mensaje = m;
 	}
 
 	public String getMensaje() {
-		return mensaje;
+		return this.mensaje;
 	}
 
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
+	public void setMensaje(String m) {
+		this.mensaje = m;
 	}
 	
 	
