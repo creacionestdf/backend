@@ -1,12 +1,10 @@
 package com.porfolio.backend.controller;
 
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,13 +30,13 @@ public class AcercadeController {
 	@GetMapping("/traer")
 	public ResponseEntity<List<Acercade>> getAcercade() {
 		List<Acercade> list= Iservice.getAcercade();
-		return new ResponseEntity(list, HttpStatus.OK);
+		return new ResponseEntity<List<Acercade>>(list, HttpStatus.OK);
 	}
 
 	//Para CREAR una...
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
-	public ResponseEntity<?> createAcercade(@RequestBody Acercade obj) {
+	public ResponseEntity<?>createAcercade(@RequestBody Acercade obj) {
 		Iservice.saveAcercade(obj);
 		return new ResponseEntity(new Mensaje("Acercade creado correctamente"), HttpStatus.OK);
 	}
@@ -55,7 +53,7 @@ public class AcercadeController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Acercade> obtenerAcercadePorId(@PathVariable Long id) {
 		Acercade obj = Iservice.findAcercade(id);
-		return ResponseEntity.ok(obj);
+		return new ResponseEntity<Acercade>(obj, HttpStatus.OK);
 	}
 
 	//Este metodo sirve para EDITAR una...
@@ -68,7 +66,7 @@ public class AcercadeController {
 		
 		Acercade Actualizada = Iservice.saveAcercade(obj);
 		
-		return ResponseEntity.ok(Actualizada);
+		return new ResponseEntity<Acercade>(Actualizada, HttpStatus.OK);
 
 	}
 }

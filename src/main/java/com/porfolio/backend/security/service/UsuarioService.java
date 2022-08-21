@@ -1,18 +1,17 @@
 package com.porfolio.backend.security.service;
 
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.porfolio.backend.security.entity.Usuario;
 import com.porfolio.backend.security.repository.iUsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
 public class UsuarioService {
+	
 	@Autowired
 	iUsuarioRepository iusuarioRepository;
 	
@@ -28,7 +27,5 @@ public class UsuarioService {
 		return iusuarioRepository.existsByEmail(email);
 	}
 	
-	public void save(Usuario usuario) {
-		iusuarioRepository.save(usuario);
-	}
+	public void save(Usuario usuario) {	iusuarioRepository.save(usuario); }
 }

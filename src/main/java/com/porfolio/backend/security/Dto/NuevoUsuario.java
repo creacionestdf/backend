@@ -1,16 +1,16 @@
 package com.porfolio.backend.security.Dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.validation.constraints.NotBlank;
 
 public class NuevoUsuario {
 	@NotBlank
 	private String nombre;
 	@NotBlank
 	private String nombreUsuario;
-	@NotBlank
+	@Email
 	private String email;
 	@NotBlank
 	private String password;

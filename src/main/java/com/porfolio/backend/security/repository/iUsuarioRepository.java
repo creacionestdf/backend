@@ -1,16 +1,14 @@
 package com.porfolio.backend.security.repository;
 
-import java.util.Optional;
-
+import com.porfolio.backend.security.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.porfolio.backend.security.entity.Usuario;
+import java.util.Optional;
 
 @Repository
 public interface iUsuarioRepository extends JpaRepository<Usuario, Integer>{
 	Optional<Usuario> findByNombreUsuario(String nombreUsuario);
-	
 	boolean existsByNombreUsuario(String nombreUsuario);
 	boolean existsByEmail(String email);
 }

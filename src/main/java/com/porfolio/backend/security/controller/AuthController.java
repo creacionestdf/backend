@@ -1,9 +1,14 @@
 package com.porfolio.backend.security.controller;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.validation.Valid;
+import com.porfolio.backend.security.entity.Usuario;
+import com.porfolio.backend.security.entity.Rol;
+import com.porfolio.backend.security.enums.RolNombre;
+import com.porfolio.backend.security.jwt.JwtProvider;
+import com.porfolio.backend.security.service.RolService;
+import com.porfolio.backend.security.service.UsuarioService;
+import com.porfolio.backend.security.Dto.JwtDto;
+import com.porfolio.backend.security.Dto.LoginUsuario;
+import com.porfolio.backend.security.Dto.NuevoUsuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,19 +20,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.porfolio.backend.security.entity.Usuario;
-import com.porfolio.backend.security.entity.Rol;
-import com.porfolio.backend.security.enums.RolNombre;
-import com.porfolio.backend.security.jwt.JwtProvider;
-import com.porfolio.backend.security.service.RolService;
-import com.porfolio.backend.security.service.UsuarioService;
-import com.porfolio.backend.security.Dto.JwtDto;
-import com.porfolio.backend.security.Dto.LoginUsuario;
-import com.porfolio.backend.security.Dto.NuevoUsuario;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
@@ -78,9 +75,9 @@ public class AuthController {
 	
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
+	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
 		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
 			
 		Authentication authentication = 
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(), loginUsuario.getPassword()));
@@ -91,8 +88,8 @@ public class AuthController {
 				
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		
-		JwtDto jwtDTO = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
 		
-		return new ResponseEntity<>(jwtDTO, HttpStatus.OK);
+		return new ResponseEntity(jwtDto, HttpStatus.OK);
 	}
 }
