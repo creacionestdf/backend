@@ -67,6 +67,7 @@ public class MainSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/auth/**").permitAll()//permitimos el acceso a /auth a cualquiera
+                .antMatchers("/acercade/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
@@ -77,7 +78,10 @@ public class MainSecurity {
         
         http.addFilterBefore(jwtTokenFilter(), 
         		UsernamePasswordAuthenticationFilter.class);
+        //  http.headers().frameOptions().sameOrigin();
+        http.headers().frameOptions().sameOrigin();
         
+        // return http.build();
         return http.build();
     }
 
