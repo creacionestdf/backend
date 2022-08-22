@@ -13,11 +13,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@SuppressWarnings("deprecation")
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -48,34 +49,30 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        return super.authenticationManagerBean(); 
     }
 
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+        return super.authenticationManager(); 
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
+        http.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers("/auth/**").permitAll()//permitimos el acceso a /auth a cualquiera
+                .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        
+        //Las demas peticiones pasaran por este filtro para validadr el token
+        
+        http.addFilterBefore(jwtTokenFilter(), 
+        		UsernamePasswordAuthenticationFilter.class);
     }
-	
-	
 
-	
-
-	
-
-	
 	
 	
 }
