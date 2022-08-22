@@ -6,24 +6,25 @@ import com.porfolio.backend.security.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class MainSecurity extends WebSecurityConfigurerAdapter{
-	
+//public class MainSecurity extends WebSecurityConfigurerAdapter{
+public class MainSecurity {
 	@Autowired
 	UserDetailsImpl userDetailsService;
 	
@@ -41,6 +42,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
         return new BCryptPasswordEncoder();
     }
 
+    /*
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -51,14 +53,18 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean(); 
     }
-
+    
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager(); 
     }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+*/
+    
+    //@Override
+    //protected void configure(HttpSecurity http) throws Exception {
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/auth/**").permitAll()//permitimos el acceso a /auth a cualquiera
                 .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
@@ -71,6 +77,8 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
         
         http.addFilterBefore(jwtTokenFilter(), 
         		UsernamePasswordAuthenticationFilter.class);
+        
+        return http.build();
     }
 
 	
