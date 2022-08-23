@@ -60,14 +60,12 @@ public class MainSecurity {
     }
 */
     
-    //@Override
-    //protected void configure(HttpSecurity http) throws Exception {
-    
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
+   
+    /*
+@Override
+   protected void configure(HttpSecurity http) throws Exception {
+      http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/auth/**").permitAll()//permitimos el acceso a /auth a cualquiera
-                .antMatchers("/acercade/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
@@ -78,10 +76,29 @@ public class MainSecurity {
         
         http.addFilterBefore(jwtTokenFilter(), 
         		UsernamePasswordAuthenticationFilter.class);
-        //  http.headers().frameOptions().sameOrigin();
+  
+    }
+    
+    */
+    
+    
+
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/auth/**").permitAll()//permitimos el acceso a /auth a cualquiera
+                .antMatchers("/acercade/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
+                .and()
+                .formLogin()
+                	.loginPage("/login")
+                	.usernameParameter("nombreUsuario")
+                	.permitAll()
+                .and().logout().permitAll();
+                
         http.headers().frameOptions().sameOrigin();
         
-        // return http.build();
         return http.build();
     }
 
