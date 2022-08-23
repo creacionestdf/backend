@@ -13,34 +13,32 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.porfolio.backend.service.IAcercadeService;
 import com.porfolio.backend.model.Acercade;
-import com.porfolio.backend.security.controller.Mensaje;
+
 
 
 @RestController
 @RequestMapping("/acercade")
-
 public class AcercadeController {
 
 	@Autowired IAcercadeService Iservice;
 
 	// Este metodo sirve para LISTAR todas las...
 	@GetMapping("/traer")
-	public ResponseEntity<List<Acercade>> getAcercade() {
-		List<Acercade> list= Iservice.getAcercade();
-		return new ResponseEntity<List<Acercade>>(list, HttpStatus.OK);
+	public List<Acercade> getAcercade() {
+		return Iservice.getAcercade();
 	}
 
+	
 	//Para CREAR una...
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
-	public ResponseEntity<?>createAcercade(@RequestBody Acercade obj) {
+	public void createAcercade(@RequestBody Acercade obj) {
 		Iservice.saveAcercade(obj);
-		return new ResponseEntity(new Mensaje("Acercade creado correctamente"), HttpStatus.OK);
 	}
 
+	
 	// Este metodo sirve para BORRAR una...
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
@@ -49,13 +47,14 @@ public class AcercadeController {
 
 	}
 
+	
 	// Este metodo sirve para BUSCAR una...
 	@GetMapping("/{id}")
-	public ResponseEntity<Acercade> obtenerAcercadePorId(@PathVariable Long id) {
-		Acercade obj = Iservice.findAcercade(id);
-		return new ResponseEntity<Acercade>(obj, HttpStatus.OK);
+	public  void obtenerAcercadePorId(@PathVariable Long id) {
+		Iservice.findAcercade(id);
 	}
 
+	
 	//Este metodo sirve para EDITAR una...
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/actualizar/{id}")
