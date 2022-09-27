@@ -20,6 +20,7 @@ import com.porfolio.backend.model.Experiencia;
 
 @RestController
 @RequestMapping("/experiencias")
+@CrossOrigin(origins="*")
 
 public class ExperienciaController {
 	
@@ -82,6 +83,7 @@ public class ExperienciaController {
 	
 	
 	//Este metodo sirve para editar una experiencia
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/editar/{id}")
 	public Experiencia editExperiencia(
 			@PathVariable Long id, 

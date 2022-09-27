@@ -3,6 +3,8 @@ package com.porfolio.backend.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import com.porfolio.backend.model.Certificacion;
 
 @RestController
 @RequestMapping("/certificaciones")
+@CrossOrigin(origins="*")
 
 public class CertificacionController {
 
@@ -33,6 +36,7 @@ public class CertificacionController {
 
 	
 	// Este metodo sirve para CREAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
 	public void createCertificacion(@RequestBody Certificacion cert) {
 		ICertificacion.saveCertificacion(cert);
@@ -40,6 +44,7 @@ public class CertificacionController {
 
 	
 	// Este metodo sirve para BORRAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
 	public void deleteCertificacion(@PathVariable Long id) {
 		ICertificacion.deleteCertificacion(id);
@@ -55,6 +60,7 @@ public class CertificacionController {
 
 	
 	//Este metodo sirve para EDITAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/actualizar/{id}")
 	public ResponseEntity<Certificacion> actualizarCertificacion(@PathVariable Long id,	@RequestBody Certificacion detalles) {
 		Certificacion obj = ICertificacion.findCertificacion(id);

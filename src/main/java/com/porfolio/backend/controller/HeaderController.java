@@ -2,7 +2,10 @@ package com.porfolio.backend.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,16 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import com.porfolio.backend.service.IHeaderService;
+//import com.porfolio.backend.model.Acercade;
 import com.porfolio.backend.model.Header;
 
 
 @RestController
 @RequestMapping("/perfil")
-
+@CrossOrigin(origins="*")
 public class HeaderController {
 
 	@Autowired
@@ -27,8 +32,11 @@ public class HeaderController {
 
 	// Este metodo sirve para LISTAR todas las...
 	@GetMapping("/traer")
-	public List<Header> getHeader() {
-		return Iservice.getHeader();
+	@ResponseBody
+	//@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<List<Header>> getHeader() {
+		List<Header> li=Iservice.getHeader();
+		return new ResponseEntity<List<Header>>(li, HttpStatus.OK);
 	}
 
 	// Este metodo sirve para CREAR una...

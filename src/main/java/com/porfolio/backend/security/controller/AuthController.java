@@ -23,13 +23,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins="*")
 
 public class AuthController {
+	
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -47,8 +48,7 @@ public class AuthController {
 	JwtProvider jwtProvider;
 	
 	@PostMapping("/nuevo")
-	public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, 
-			BindingResult bindingResult){
+	public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
 		if(bindingResult.hasErrors())
 			return new ResponseEntity(new Mensaje("Campos mal puesto o email invalidos"),HttpStatus.BAD_REQUEST);
 		if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
@@ -62,7 +62,6 @@ public class AuthController {
 		
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
-		
 		if(nuevoUsuario.getRoles().contains("admin"))
 			roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
 		usuario.setRoles(roles);

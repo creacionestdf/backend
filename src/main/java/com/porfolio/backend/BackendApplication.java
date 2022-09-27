@@ -13,16 +13,17 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 		
-	
+	/*
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("https://porfolioweb-14781.web.app").allowedMethods("GET","POST","PUT","DELETE");
+				//registry.addMapping("/**").allowedOrigins("https://porfolioweb-14781.web.app").allowedMethods("GET","POST","PUT","DELETE");
+				registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedMethods("GET","POST","PUT","DELETE");
 			}
 		};
-	}
+	}*/
 	
 
 }

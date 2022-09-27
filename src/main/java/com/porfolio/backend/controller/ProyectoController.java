@@ -3,6 +3,8 @@ package com.porfolio.backend.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import com.porfolio.backend.model.Proyecto;
 
 @RestController
 @RequestMapping("/proyectos")
+@CrossOrigin(origins="*")
 
 public class ProyectoController {
 
@@ -32,12 +35,14 @@ public class ProyectoController {
 	}
 
 	// Este metodo sirve para CREAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/crear")
 	public void createProyecto(@RequestBody Proyecto obj) {
 		Iservice.saveProyecto(obj);
 	}
 
 	// Este metodo sirve para BORRAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/borrar/{id}")
 	public void deleteProyecto(@PathVariable Long id) {
 		Iservice.deleteProyecto(id);
@@ -52,6 +57,7 @@ public class ProyectoController {
 	}
 
 	//Este metodo sirve para EDITAR una...
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/actualizar/{id}")
 	public ResponseEntity<Proyecto> actualizarProyecto(@PathVariable Long id,	@RequestBody Proyecto detalles) {
 		Proyecto obj = Iservice.findProyecto(id);

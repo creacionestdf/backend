@@ -18,9 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class MainSecurity extends WebSecurityConfigurerAdapter{
 
 	@Autowired
@@ -62,24 +64,21 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
     
 @Override
    protected void configure(HttpSecurity http) throws Exception {
-      http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/auth/**").permitAll()//permitimos el acceso a /auth a cualquiera
-                .antMatchers("/acercade/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+      http.cors().and().csrf().disable()
+      		.authorizeRequests()
+            .antMatchers("/auth/**").permitAll()//permitimos el acceso a /auth a cualquiera
+            //.antMatchers("/acercade/**").hasAuthority("ADMIN")
+            .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
+            .and()
+            .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
         //Las demas peticiones pasaran por este filtro para validadr el token
         
-        http.addFilterBefore(jwtTokenFilter(), 
-        		UsernamePasswordAuthenticationFilter.class);
-  
-    }
+        http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+      }
     
-    
-    
-	
+ 	
 	
 }
